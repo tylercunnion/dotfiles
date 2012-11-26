@@ -23,7 +23,7 @@ precmd () {
 }
 
 setopt prompt_subst
-PROMPT='[%n@%m:%~]${vcs_info_msg_0_} $ '
+PROMPT='[%B%F{red}%m%f%b:%F{yellow}%~%f]${vcs_info_msg_0_} $ '
 RPROMPT="[%*]"
 
 autoload -U compinit promptinit colors #add-zsh-hook
