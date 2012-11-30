@@ -17,10 +17,16 @@ fi
 
 ### Source control
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git*' formats       '[%b]'
+zstyle ':vcs_info:git*' formats '(%b%c%u)'
+zstyle ':vcs_info:git*' stagedstr '%F{green}%{±%G%}%f}'
+zstyle ':vcs_info:git*' unstagedstr '%F{red}%{±%G%}%f'
 precmd () {
     vcs_info
 }
+
+
+### Use vi keybindings
+bindkey -v
 
 setopt prompt_subst
 PROMPT='[%B%F{red}%m%f%b:%F{yellow}%~%f]${vcs_info_msg_0_} $ '
