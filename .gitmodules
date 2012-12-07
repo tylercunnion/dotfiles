@@ -19,3 +19,6 @@
 [submodule "dircolors-solarized"]
 	path = dircolors-solarized
 	url = git://github.com/seebi/dircolors-solarized.git
+[submodule "vim/bundle/vim-jsbeautify"]
+	path = vim/bundle/vim-jsbeautify
+	url = https://github.com/maksimr/vim-jsbeautify.git
