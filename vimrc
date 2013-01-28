@@ -24,7 +24,10 @@ set ruler
 set softtabstop=4
 set expandtab
 set backspace=indent,eol,start
-set cc=80
+try
+    set cc=80
+catch
+endtry
 
 set encoding=utf-8 "god willing this will work ok
 
