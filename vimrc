@@ -57,3 +57,4 @@ set incsearch
 
 au BufRead,BufNewFile *.less set filetype=less
 au BufRead,BufNewFile *.as set filetype=actionscript
+au BufRead,BufNewFile * if expand('%:t') !~ '\.' && getline(1) =~ '-*- mason -*-' | set filetype=mason | endif
