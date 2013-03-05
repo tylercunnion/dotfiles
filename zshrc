@@ -39,6 +39,7 @@ colors
 
 export EDITOR='vim'
 export VISUAL='vim'
+export PAGER='less'
 
 REPORTTIME=1
 TIMEFMT="%J completed in %*E"
