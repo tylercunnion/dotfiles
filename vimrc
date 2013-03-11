@@ -55,3 +55,6 @@ filetype indent on
 set hlsearch
 set incsearch
 
+" Ctrl-r in visual mode for replace
+" http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text
+vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>
