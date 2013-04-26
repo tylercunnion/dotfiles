@@ -7,8 +7,6 @@ set showcmd
 
 set autoread
 
-set iskeyword-=_  " Word movements stop on underscores  
-
 set mouse=a " awww yiss
  
 set printoptions=paper:letter,duplex:off
