@@ -8,6 +8,8 @@ set showcmd
 set autoread
 
 set mouse=a " awww yiss
+
+map <F5> :NERDTreeToggle<CR>
  
 set printoptions=paper:letter,duplex:off
 set number
