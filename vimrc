@@ -14,7 +14,8 @@ map <F5> :NERDTreeToggle<CR>
 set printoptions=paper:letter,duplex:off
 set number
 set ls=2
-set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
+set statusline=%<\ %n:%f\ %m%r%y[%{strlen(&fenc)?&fenc:'none'}]
+set statusline+=%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
 set autoindent
 set incsearch
 set hidden
