@@ -45,6 +45,10 @@ export LESS='-R'
 REPORTTIME=1
 TIMEFMT="%J completed in %*E"
 
+HISTSIZE=10000
+SAVEHIST=100000
+HISTFILE=~/.history
+
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
 
