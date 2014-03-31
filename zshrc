@@ -74,6 +74,5 @@ function search
 }
 
 setopt CORRECT
-setopt RM_STAR_WAIT
 
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
