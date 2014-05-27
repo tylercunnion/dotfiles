@@ -22,8 +22,7 @@ set hidden
 set history=1000
 set scrolloff=10
 set ruler
-set softtabstop=4
-set expandtab
+set softtabstop=4 shiftwidth=4 expandtab
 set backspace=indent,eol,start
 try
     set cc=80
@@ -33,7 +32,7 @@ endtry
 set encoding=utf-8 "god willing this will work ok
 
 let g:solarized_termtrans = 1
-set background=dark
+set background=light
 colorscheme solarized 
 
 set copyindent    " copy the previous indentation on autoindenting
