@@ -32,7 +32,7 @@ endtry
 set encoding=utf-8 "god willing this will work ok
 
 let g:solarized_termtrans = 1
-set background=light
+set background=dark
 colorscheme solarized 
 
 set copyindent    " copy the previous indentation on autoindenting
