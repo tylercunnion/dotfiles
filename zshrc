@@ -62,17 +62,6 @@ function locate
 	find $1 -name "$2" -print
 }
 
-function search
-{
-    local search_dir
-    if [[ -z $2 ]] then
-        search_dir='.'
-    else
-        search_dir=$2 
-    fi
-    find $search_dir -exec grep "$1" '{}' \; -print
-}
-
 setopt CORRECT
 
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
