@@ -1,10 +1,10 @@
-install: install-zsh install-vim install-tig install-dircolors
+install: install-zsh install-vim install-tig install-dircolors install-tmux
 
 install-zsh: $(HOME)/.zshrc $(HOME)/.zsh
 install-vim: $(HOME)/.vimrc $(HOME)/.vim
 install-tig: $(HOME)/.tigrc
 install-dircolors: $(HOME)/.dir_colors
-
+install-tmux: $(HOME)/.tmux.conf
 
 $(HOME)/.zshrc:
 	ln -s $(CURDIR)/zshrc $(HOME)/.zshrc
@@ -21,6 +21,9 @@ $(HOME)/.tigrc:
 
 $(HOME)/.dir_colors:
 	ln -s $(CURDIR)/dircolors-solarized/dircolors.ansi-universal $(HOME)/.dir_colors
+
+$(HOME)/.tmux.conf:
+	ln -s $(CURDIR)/tmux.conf $(HOME)/.tmux.conf
 
 clean:
 	rm $(HOME)/.zshrc
