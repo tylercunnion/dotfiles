@@ -55,3 +55,21 @@
 [submodule "vim/bundle/vim-fish"]
 	path = vim/pack/plugins/start/vim-fish
 	url = https://github.com/dag/vim-fish.git
+[submodule "vim/pack/plugins/start/vim-tmux"]
+	path = vim/pack/plugins/start/vim-tmux
+	url = https://github.com/tmux-plugins/vim-tmux.git
+[submodule "vim/pack/plugins/start/vim-tmux-navigator"]
+	path = vim/pack/plugins/start/vim-tmux-navigator
+	url = https://github.com/christoomey/vim-tmux-navigator.git
+[submodule "vim/pack/plugins/start/ctrlp.vim"]
+	path = vim/pack/plugins/start/ctrlp.vim
+	url = https://github.com/ctrlpvim/ctrlp.vim.git
+[submodule "vim/pack/plugins/start/tagbar.git"]
+	path = vim/pack/plugins/start/tagbar.git
+	url = https://github.com/majutsushi/tagbar.git
+[submodule "vim/pack/plugins/start/vim-airline"]
+	path = vim/pack/plugins/start/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule "vim/pack/plugins/start/vim-airline-themes"]
+	path = vim/pack/plugins/start/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes.git

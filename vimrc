@@ -7,12 +7,13 @@ set mouse=a
 set ttymouse=xterm
 
 map <F5> :NERDTreeToggle<CR>
+map <F6> :TagbarToggle<CR>
  
 set printoptions=paper:letter,duplex:off
 set number
 set ls=2
-set statusline=%<\ %n:%f\ %m%r%y[%{strlen(&fenc)?&fenc:'none'}]
-set statusline+=%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
+"set statusline=%<\ %n:%f\ %m%r%y[%{strlen(&fenc)?&fenc:'none'}]
+"set statusline+=%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
 set autoindent
 set incsearch
 set hidden
@@ -44,6 +45,8 @@ set smarttab      " insert tabs on the start of a line according to
 set nobackup
 set noswapfile
 
+let g:airline_powerline_fonts = 1
+
 syntax on
 filetype on
 filetype plugin on
@@ -70,5 +73,45 @@ let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
-let g:go_fmt_autosave = 0
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --vimgrep --smart-case'
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+function! CtrlPCommand()
+    let c = 0
+    let wincount = winnr('$')
+    " Don't open it here if current buffer is not writable (e.g. NERDTree)
+    while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+        exec 'wincmd w'
+        let c = c + 1
+    endwhile
+    exec 'CtrlP'
+endfunction
+
+let g:ctrlp_cmd = 'call CtrlPCommand()'
