@@ -61,10 +61,6 @@ autocmd FileType javascript noremap <buffer> <C-s> :call JsBeautify()<cr>
 " http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>
 
-" Keep go files from taking 10 seconds to save
-" https://github.com/fatih/vim-go/tree/3eb57ac3a8e02a3d6e2bfba981144c6e1af3545b#using-with-syntastic
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 " gimme those go highlights
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -72,6 +68,7 @@ let g:go_highlight_fields = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_fmt_command = "goimports"
 
 let g:ackprg = 'ag --vimgrep --smart-case'
 
@@ -103,15 +100,4 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-function! CtrlPCommand()
-    let c = 0
-    let wincount = winnr('$')
-    " Don't open it here if current buffer is not writable (e.g. NERDTree)
-    while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
-        exec 'wincmd w'
-        let c = c + 1
-    endwhile
-    exec 'CtrlP'
-endfunction
-
-let g:ctrlp_cmd = 'call CtrlPCommand()'
+set rtp+=/usr/local/opt/fzf
