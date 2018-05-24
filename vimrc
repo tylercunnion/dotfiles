@@ -1,4 +1,5 @@
 let mapleader=","
+
 set showcmd
 
 set autoread
@@ -29,6 +30,34 @@ endtry
 
 set encoding=utf-8 "god willing this will work ok
 
+
+packadd minpac
+
+call minpac#init()
+call minpac#add('fatih/vim-go', {'branch': 'v1.17'})
+call minpac#add('junegunn/fzf.vim')
+call minpac#add('majutsushi/tagbar', {'branch': 'v2.7'})
+call minpac#add('scrooloose/nerdcommenter', {'branch': '2.5.1'})
+call minpac#add('scrooloose/nerdtree')
+call minpac#add('vim-airline/vim-airline', {'branch': 'v0.9'})
+call minpac#add('vim-airline/vim-airline-themes')
+call minpac#add('altercation/vim-colors-solarized')
+call minpac#add('dag/vim-fish')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('vim-perl/vim-perl')
+call minpac#add('tpope/vim-repeat', {'branch': 'v1.2'})
+call minpac#add('vim-ruby/vim-ruby')
+call minpac#add('tpope/vim-surround', {'branch': 'v2.1'})
+call minpac#add('tmux-plugins/vim-tmux')
+call minpac#add('christoomey/vim-tmux-navigator')
+call minpac#add('artur-shaik/vim-javacomplete2')
+call minpac#add('hashivim/vim-terraform')
+call minpac#add('airblade/vim-rooter')
+call minpac#add('Shougo/deoplete.nvim')
+call minpac#add('roxma/nvim-yarp')
+call minpac#add('roxma/vim-hug-neovim-rpc')
+call minpac#add('zchee/deoplete-go')
+
 let g:solarized_termtrans = 1
 set background=dark
 colorscheme solarized 
@@ -55,7 +84,10 @@ filetype indent on
 set hlsearch
 set incsearch
 
-autocmd FileType javascript noremap <buffer> <C-s> :call JsBeautify()<cr>
+set completeopt-=preview
+let g:deoplete#enable_at_startup = 1
+set omnifunc=syntaxcomplete#Complete
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " Ctrl-r in visual mode for replace
 " http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text

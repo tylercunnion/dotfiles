@@ -1,7 +1,7 @@
 install: install-zsh install-vim install-tig install-dircolors install-tmux install-fish
 
 install-zsh: $(HOME)/.zshrc $(HOME)/.zsh
-install-vim: $(HOME)/.vimrc $(HOME)/.vim
+install-vim: $(HOME)/.vimrc $(HOME)/.vim $(HOME)/.vimpackfile install-minpac
 install-tig: $(HOME)/.tigrc
 install-dircolors: $(HOME)/.dir_colors
 install-tmux: $(HOME)/.tmux.conf
@@ -14,8 +14,15 @@ $(HOME)/.zsh:
 
 $(HOME)/.vimrc:
 	ln -s $(CURDIR)/vimrc $(HOME)/.vimrc
+$(HOME)/.vimpackfile:
+	ln -s $(CURDIR)/vimpackfile $(HOME)/.vimpackfile
 $(HOME)/.vim:
 	ln -s $(CURDIR)/vim $(HOME)/.vim
+
+install-minpac:
+	mkdir -p $(HOME)/.vim/pack/minpac/opt
+	cd $(HOME)/.vim/pack/minpac/opt && \
+	git clone https://github.com/k-takata/minpac.git
 
 $(HOME)/.tigrc:
 	ln -s $(CURDIR)/tigrc $(HOME)/.tigrc
