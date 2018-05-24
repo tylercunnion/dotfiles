@@ -66,4 +66,4 @@ setopt CORRECT
 
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
