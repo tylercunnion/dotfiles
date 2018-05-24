@@ -57,6 +57,7 @@ call minpac#add('Shougo/deoplete.nvim')
 call minpac#add('roxma/nvim-yarp')
 call minpac#add('roxma/vim-hug-neovim-rpc')
 call minpac#add('zchee/deoplete-go')
+call minpac#add('w0rp/ale')
 
 let g:solarized_termtrans = 1
 set background=dark
@@ -88,6 +89,8 @@ set completeopt-=preview
 let g:deoplete#enable_at_startup = 1
 set omnifunc=syntaxcomplete#Complete
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+let g:airline#extensions#ale#enabled = 1
 
 " Ctrl-r in visual mode for replace
 " http://stackoverflow.com/questions/676600/vim-search-and-replace-selected-text
