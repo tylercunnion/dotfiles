@@ -1,3 +1,4 @@
+# Defined in /var/folders/x9/w42s_psd6wz9lrb5t6_7rcf9_09y7z/T//fish.UFKqcC/fish_prompt.fish @ line 2
 function fish_prompt --description 'Write out the prompt'
 	set -l last_status $status
     set -l normal (set_color normal)
@@ -57,10 +58,19 @@ function fish_prompt --description 'Write out the prompt'
             set suffix '$'
     end
 
+    function __fish_kube_prompt
+        if command -sq "kubectl"
+            set -l kubectx (kubectl config current-context)
+            set -l kubens (kubectl config view --minify --output 'jsonpath={..namespace}')
+            echo [$kubectx:$kubens]
+        end
+    end
+
     set -l prompt_status
     if test $last_status -ne 0
         set prompt_status ' ' (set_color $fish_color_status) "[$last_status]" "$normal"
     end
 
-    echo -n -s [ (set_color $fish_color_user) "$USER" $normal : (set_color $color_cwd) (prompt_pwd) $normal ] (__fish_vcs_prompt) $normal $prompt_status " $suffix "
+    #echo -n -s [ (set_color $fish_color_user) "$USER" $normal : (set_color $color_cwd) (prompt_pwd) $normal ] (__fish_vcs_prompt) $normal $prompt_status " $suffix "
+    echo -n -s [ (set_color $color_cwd) (prompt_pwd) $normal ] " " (__fish_kube_prompt) (__fish_vcs_prompt) $normal $prompt_status " $suffix "
 end
