@@ -58,6 +58,7 @@ call minpac#add('roxma/nvim-yarp')
 call minpac#add('roxma/vim-hug-neovim-rpc')
 call minpac#add('zchee/deoplete-go')
 call minpac#add('w0rp/ale')
+call minpac#add('edkolev/tmuxline.vim')
 
 let g:solarized_termtrans = 1
 set background=dark
@@ -76,6 +77,7 @@ set nobackup
 set noswapfile
 
 let g:airline_powerline_fonts = 1
+let g:airline_solarized_bg='dark'
 
 syntax on
 filetype on
