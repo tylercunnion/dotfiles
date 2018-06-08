@@ -60,7 +60,6 @@ call minpac#add('zchee/deoplete-go')
 call minpac#add('w0rp/ale')
 call minpac#add('edkolev/tmuxline.vim')
 
-let g:solarized_termtrans = 1
 set background=dark
 colorscheme solarized 
 
@@ -78,6 +77,13 @@ set noswapfile
 
 let g:airline_powerline_fonts = 1
 let g:airline_solarized_bg='dark'
+
+let g:tmuxline_preset = {
+  \'a' : '#(/bin/bash ~/.tmux/kube-tmux/kube.tmux white,normal white white)',
+  \'win'  : ['#I', '#W'],
+  \'cwin' : ['#I', '#W', '#F'],
+  \'y'    : ['%R', '%a', '%Y'],
+  \'z'    : '#h'}
 
 syntax on
 filetype on
