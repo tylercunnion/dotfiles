@@ -1,7 +1,3 @@
-eval (thefuck --alias | tr '
-' ';')
-
-
 if status --is-interactive
     fish_hybrid_key_bindings
 end
@@ -15,3 +11,5 @@ if test -e ~/.config/fish/system.fish
     source ~/.config/fish/system.fish
 end
 
+
+thefuck --alias | source
