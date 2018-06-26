@@ -9,7 +9,7 @@ set ttymouse=xterm
 
 map <F5> :NERDTreeToggle<CR>
 map <F6> :TagbarToggle<CR>
- 
+
 set printoptions=paper:letter,duplex:off
 set number
 set ls=2
@@ -30,7 +30,6 @@ endtry
 
 set encoding=utf-8 "god willing this will work ok
 
-
 packadd minpac
 
 call minpac#init()
@@ -41,12 +40,14 @@ call minpac#add('scrooloose/nerdcommenter', {'branch': '2.5.1'})
 call minpac#add('scrooloose/nerdtree')
 call minpac#add('vim-airline/vim-airline', {'branch': 'v0.9'})
 call minpac#add('vim-airline/vim-airline-themes')
-call minpac#add('altercation/vim-colors-solarized')
+call minpac#add('lifepillar/vim-solarized8')
+call minpac#add('romainl/flattened')
 call minpac#add('dag/vim-fish')
 call minpac#add('tpope/vim-fugitive')
-call minpac#add('vim-perl/vim-perl')
+call minpac#add('tpope/vim-rhubarb')
+"call minpac#add('vim-perl/vim-perl')
 call minpac#add('tpope/vim-repeat', {'branch': 'v1.2'})
-call minpac#add('vim-ruby/vim-ruby')
+"call minpac#add('vim-ruby/vim-ruby')
 call minpac#add('tpope/vim-surround', {'branch': 'v2.1'})
 call minpac#add('tmux-plugins/vim-tmux')
 call minpac#add('christoomey/vim-tmux-navigator')
@@ -59,9 +60,16 @@ call minpac#add('roxma/vim-hug-neovim-rpc')
 call minpac#add('zchee/deoplete-go')
 call minpac#add('w0rp/ale')
 call minpac#add('edkolev/tmuxline.vim')
+call minpac#add('craigemery/vim-autotag')
+call minpac#add('sheerun/vim-polyglot')
+call minpac#add('chriskempson/base16-vim')
+
+let g:github_enterprise_urls = ['https://git.liveramp.net']
+
+let g:solarized_use16 = 1
 
 set background=dark
-colorscheme solarized 
+colorscheme flattened_dark
 
 set copyindent    " copy the previous indentation on autoindenting
 set shiftwidth=4  " number of spaces to use for autoindenting
@@ -113,6 +121,10 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
 
+let java_highlight_all = 1
+let java_comment_strings = 1
+let java_highlight_java_lang_ids=1
+
 let g:ackprg = 'ag --vimgrep --smart-case'
 
 let g:tagbar_type_go = {
@@ -143,4 +155,5 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
+set tags=tags;/ " look for ctags up to the root
 set rtp+=/usr/local/opt/fzf
