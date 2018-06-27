@@ -56,16 +56,18 @@ call minpac#add('artur-shaik/vim-javacomplete2')
 call minpac#add('hashivim/vim-terraform')
 call minpac#add('airblade/vim-rooter')
 call minpac#add('Shougo/deoplete.nvim')
-call minpac#add('roxma/nvim-yarp')
-call minpac#add('roxma/vim-hug-neovim-rpc')
+    call minpac#add('roxma/nvim-yarp')
+    call minpac#add('roxma/vim-hug-neovim-rpc')
 call minpac#add('zchee/deoplete-go')
 call minpac#add('w0rp/ale')
 call minpac#add('edkolev/tmuxline.vim')
 call minpac#add('craigemery/vim-autotag')
 call minpac#add('sheerun/vim-polyglot')
 call minpac#add('chriskempson/base16-vim')
+call minpac#add('dhleong/intellivim')
 
 let g:github_enterprise_urls = ['https://git.liveramp.net']
+
 
 let g:solarized_use16 = 1
 
@@ -104,8 +106,9 @@ set hlsearch
 set incsearch
 
 set completeopt-=preview
-let g:deoplete#enable_at_startup = 1
 set omnifunc=syntaxcomplete#Complete
+let g:deoplete#enable_at_startup = 1
+"let g:deoplete#complete_method = "omnifunc"
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 let g:airline#extensions#ale#enabled = 1
