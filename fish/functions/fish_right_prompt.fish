@@ -1,5 +1,4 @@
+# Defined in /tmp/fish.q1ErrS/fish_right_prompt.fish @ line 2
 function fish_right_prompt
-    set cur_time (date "+%H:%M:%S")
-    echo [$cur_time]
+	
 end
-

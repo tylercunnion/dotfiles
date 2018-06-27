@@ -34,6 +34,7 @@ packadd minpac
 
 call minpac#init()
 call minpac#add('fatih/vim-go', {'branch': 'v1.17'})
+call minpac#add('junegunn/fzf')
 call minpac#add('junegunn/fzf.vim')
 call minpac#add('majutsushi/tagbar', {'branch': 'v2.7'})
 call minpac#add('scrooloose/nerdcommenter', {'branch': '2.5.1'})
@@ -69,7 +70,8 @@ let g:github_enterprise_urls = ['https://git.liveramp.net']
 let g:solarized_use16 = 1
 
 set background=dark
-colorscheme flattened_dark
+"colorscheme flattened_dark
+colorscheme solarized8
 
 set copyindent    " copy the previous indentation on autoindenting
 set shiftwidth=4  " number of spaces to use for autoindenting
