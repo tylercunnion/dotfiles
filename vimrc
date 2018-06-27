@@ -68,11 +68,9 @@ call minpac#add('dhleong/intellivim')
 
 let g:github_enterprise_urls = ['https://git.liveramp.net']
 
-
 let g:solarized_use16 = 1
 
 set background=dark
-"colorscheme flattened_dark
 colorscheme solarized8
 
 set copyindent    " copy the previous indentation on autoindenting
@@ -108,7 +106,7 @@ set incsearch
 set completeopt-=preview
 set omnifunc=syntaxcomplete#Complete
 let g:deoplete#enable_at_startup = 1
-"let g:deoplete#complete_method = "omnifunc"
+let g:deoplete#sources#go = 'vim-go'
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 let g:airline#extensions#ale#enabled = 1
