@@ -30,41 +30,52 @@ endtry
 
 set encoding=utf-8 "god willing this will work ok
 
-packadd minpac
+function! PackInit() abort
+	packadd minpac
 
-call minpac#init()
-call minpac#add('fatih/vim-go', {'branch': 'v1.17'})
-call minpac#add('junegunn/fzf')
-call minpac#add('junegunn/fzf.vim')
-call minpac#add('majutsushi/tagbar', {'branch': 'v2.7'})
-call minpac#add('scrooloose/nerdcommenter', {'branch': '2.5.1'})
-call minpac#add('scrooloose/nerdtree')
-call minpac#add('vim-airline/vim-airline', {'branch': 'v0.9'})
-call minpac#add('vim-airline/vim-airline-themes')
-call minpac#add('lifepillar/vim-solarized8')
-call minpac#add('romainl/flattened')
-call minpac#add('dag/vim-fish')
-call minpac#add('tpope/vim-fugitive')
-call minpac#add('tpope/vim-rhubarb')
-"call minpac#add('vim-perl/vim-perl')
-call minpac#add('tpope/vim-repeat', {'branch': 'v1.2'})
-"call minpac#add('vim-ruby/vim-ruby')
-call minpac#add('tpope/vim-surround', {'branch': 'v2.1'})
-call minpac#add('tmux-plugins/vim-tmux')
-call minpac#add('christoomey/vim-tmux-navigator')
-call minpac#add('artur-shaik/vim-javacomplete2')
-call minpac#add('hashivim/vim-terraform')
-call minpac#add('airblade/vim-rooter')
-call minpac#add('Shougo/deoplete.nvim')
-    call minpac#add('roxma/nvim-yarp')
-    call minpac#add('roxma/vim-hug-neovim-rpc')
-call minpac#add('zchee/deoplete-go')
-call minpac#add('w0rp/ale')
-call minpac#add('edkolev/tmuxline.vim')
-call minpac#add('craigemery/vim-autotag')
-call minpac#add('sheerun/vim-polyglot')
-call minpac#add('chriskempson/base16-vim')
-call minpac#add('dhleong/intellivim')
+	call minpac#init()
+	call minpac#add('k-takata/minpac', {'type': 'opt'})
+
+	call minpac#add('fatih/vim-go', {'rev': 'v1.20'})
+	call minpac#add('junegunn/fzf')
+	call minpac#add('junegunn/fzf.vim')
+	call minpac#add('majutsushi/tagbar', {'rev': 'v2.7'})
+	call minpac#add('scrooloose/nerdcommenter', {'rev': '2.5.1'})
+	call minpac#add('scrooloose/nerdtree')
+	call minpac#add('vim-airline/vim-airline', {'rev': 'v0.9'})
+	call minpac#add('vim-airline/vim-airline-themes')
+	call minpac#add('lifepillar/vim-solarized8')
+	call minpac#add('romainl/flattened')
+	call minpac#add('dag/vim-fish')
+	call minpac#add('tpope/vim-fugitive')
+	call minpac#add('tpope/vim-rhubarb')
+	"call minpac#add('vim-perl/vim-perl')
+	call minpac#add('tpope/vim-repeat', {'rev': 'v1.2'})
+	call minpac#add('vim-ruby/vim-ruby')
+	call minpac#add('tpope/vim-surround', {'rev': 'v2.1'})
+	call minpac#add('tmux-plugins/vim-tmux')
+	call minpac#add('christoomey/vim-tmux-navigator')
+	call minpac#add('artur-shaik/vim-javacomplete2')
+	call minpac#add('hashivim/vim-terraform')
+	call minpac#add('airblade/vim-rooter')
+	call minpac#add('Shougo/deoplete.nvim')
+		call minpac#add('roxma/nvim-yarp')
+		call minpac#add('roxma/vim-hug-neovim-rpc')
+	call minpac#add('zchee/deoplete-go')
+	call minpac#add('w0rp/ale')
+	call minpac#add('edkolev/tmuxline.vim')
+	call minpac#add('craigemery/vim-autotag')
+	call minpac#add('sheerun/vim-polyglot')
+	call minpac#add('chriskempson/base16-vim')
+	call minpac#add('dhleong/intellivim')
+endfunction
+
+" Define user commands for updating/cleaning the plugins.
+" Each of them calls PackInit() to load minpac and register
+" the information of plugins, then performs the task.
+command! PackUpdate call PackInit() | call minpac#update('', {'do': 'call minpac#status()'})
+command! PackClean  call PackInit() | call minpac#clean()
+command! PackStatus call PackInit() | call minpac#status()
 
 let g:github_enterprise_urls = ['https://git.liveramp.net']
 
