@@ -1,7 +1,7 @@
 install: install-zsh install-vim install-tig install-dircolors install-tmux install-fish
 
 install-zsh: $(HOME)/.zshrc $(HOME)/.zsh
-install-vim: $(HOME)/.vimrc $(HOME)/.vim install-minpac
+install-vim: $(HOME)/.vimrc $(HOME)/.vim install-minpac install-neovim
 install-tig: $(HOME)/.tigrc
 install-dircolors: $(HOME)/.dir_colors
 install-tmux: $(HOME)/.tmux.conf $(HOME)/.tmux
@@ -17,16 +17,21 @@ $(HOME)/.vimrc:
 $(HOME)/.vim:
 	ln -s $(CURDIR)/vim $(HOME)/.vim
 
-install-minpac:
+install-minpac: $(HOME)/.vim/pack/minpac/opt/minpac/
+
+$(HOME)/.vim/pack/minpac/opt/minpac/:
 	mkdir -p $(HOME)/.vim/pack/minpac/opt
 	cd $(HOME)/.vim/pack/minpac/opt && \
 	git clone https://github.com/k-takata/minpac.git
+
+install-neovim:
+	pip3 install neovim
 
 $(HOME)/.tigrc:
 	ln -s $(CURDIR)/tigrc $(HOME)/.tigrc
 
 $(HOME)/.dir_colors:
-	ln -s $(CURDIR)/dircolors-solarized/dircolors.ansi-universal $(HOME)/.dir_colors
+	ln -s $(CURDIR)/dircolors-solarized/dircolors.ansi-dark $(HOME)/.dir_colors
 
 $(HOME)/.tmux:
 	ln -s $(CURDIR)/tmux $(HOME)/.tmux
