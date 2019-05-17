@@ -52,7 +52,8 @@ HISTFILE=~/.history
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
 
-eval $(dircolors ~/.dir_colors)
+alias ls="gls --color=auto"
+eval $(gdircolors ~/.dir_colors)
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 setopt extended_glob
