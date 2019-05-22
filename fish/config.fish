@@ -14,10 +14,12 @@ set -x PAGER less
 set -x LESS -R
 set -x GPG_TTY (tty)
 
-#eval (dircolors -c ~/.dir_colors)
-
 if test -e ~/.config/fish/system.fish
     source ~/.config/fish/system.fish
+end
+
+if test -e ~/.config/fish/fish_aliases
+    source ~/.config/fish/fish_aliases
 end
 
 thefuck --alias | source

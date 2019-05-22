@@ -1,2 +1,5 @@
 fishd.*
 system.fish
+functions/__bass.py
+functions/bass.fish
+functions/fzf_key_bindings.fish
