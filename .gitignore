@@ -1,3 +1,4 @@
 .netrwhist
 vim/pack
 fish/functions/fisher.fish
+tmux/plugins
