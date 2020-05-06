@@ -21,5 +21,3 @@ end
 if test -e ~/.config/fish/fish_aliases
     source ~/.config/fish/fish_aliases
 end
-
-thefuck --alias | source

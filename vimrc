@@ -5,7 +5,10 @@ set showcmd
 set autoread
 
 set mouse=a
-set ttymouse=xterm
+
+if !has('nvim')
+    set ttymouse=xterm
+endif
 
 map <F5> :NERDTreeToggle<CR>
 map <F6> :TagbarToggle<CR>
@@ -36,7 +39,7 @@ function! PackInit() abort
 	call minpac#init()
 	call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-	call minpac#add('fatih/vim-go', {'rev': 'v1.20'})
+	call minpac#add('fatih/vim-go')
 	call minpac#add('junegunn/fzf')
 	call minpac#add('junegunn/fzf.vim')
 	call minpac#add('majutsushi/tagbar', {'rev': 'v2.7'})
