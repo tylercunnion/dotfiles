@@ -8,11 +8,13 @@ if status --is-interactive
     fish_hybrid_key_bindings
 end
 
-set -x EDITOR vim
-set -x VISUAL vim
+set -x EDITOR nvim
+set -x VISUAL nvim
 set -x PAGER less
 set -x LESS -R
 set -x GPG_TTY (tty)
+
+eval (gdircolors -c ~/.dir_colors)
 
 if test -e ~/.config/fish/system.fish
     source ~/.config/fish/system.fish
