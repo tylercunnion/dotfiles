@@ -37,8 +37,8 @@ compinit
 promptinit
 colors
 
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='nvim'
+export VISUAL='nvim'
 export PAGER='less'
 export LESS='-R'
 
