@@ -13,11 +13,8 @@ endif
 map <F5> :NERDTreeToggle<CR>
 map <F6> :TagbarToggle<CR>
 
-set printoptions=paper:letter,duplex:off
 set number
 set ls=2
-"set statusline=%<\ %n:%f\ %m%r%y[%{strlen(&fenc)?&fenc:'none'}]
-"set statusline+=%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
 set autoindent
 set incsearch
 set hidden
@@ -41,15 +38,14 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'fatih/vim-go'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lifepillar/vim-solarized8'
-Plug 'romainl/flattened'
 Plug 'dag/vim-fish'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -58,7 +54,6 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'artur-shaik/vim-javacomplete2'
 Plug 'hashivim/vim-terraform'
 Plug 'airblade/vim-rooter'
 Plug 'Shougo/deoplete.nvim'
@@ -68,7 +63,6 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'craigemery/vim-autotag'
 Plug 'sheerun/vim-polyglot'
 Plug 'chriskempson/base16-vim'
-Plug 'dhleong/intellivim'
 call plug#end()
 
 let g:solarized_use16 = 1
@@ -105,7 +99,7 @@ set completeopt-=preview
 set omnifunc=syntaxcomplete#Complete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#go = 'vim-go'
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+"autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 let g:airline#extensions#ale#enabled = 1
 
