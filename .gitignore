@@ -4,3 +4,4 @@ vim/autoload
 vim/plugged
 fish/functions/fisher.fish
 tmux/plugins
+Brewfile.lock.json

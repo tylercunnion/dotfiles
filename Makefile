@@ -1,11 +1,17 @@
-install: install-zsh install-vim install-tig install-dircolors install-tmux install-fish
+install: install-zsh install-vim install-tig install-dircolors install-tmux install-fish brew-bundle
 
 install-zsh: $(HOME)/.zshrc $(HOME)/.zsh
-install-vim: $(HOME)/.vimrc $(HOME)/.vim install-minpac install-neovim
+install-vim: $(HOME)/.vimrc $(HOME)/.vim install-pynvim
 install-tig: $(HOME)/.tigrc
 install-dircolors: $(HOME)/.dir_colors
 install-tmux: $(HOME)/.tmux.conf $(HOME)/.tmux
 install-fish: $(HOME)/.config/fish
+
+install-pynvim:
+	pip3 install --upgrade pynvim
+
+brew-bundle:
+	brew bundle
 
 $(HOME)/.zshrc:
 	ln -s $(CURDIR)/zshrc $(HOME)/.zshrc
@@ -16,16 +22,6 @@ $(HOME)/.vimrc:
 	ln -s $(CURDIR)/vimrc $(HOME)/.vimrc
 $(HOME)/.vim:
 	ln -s $(CURDIR)/vim $(HOME)/.vim
-
-install-minpac: $(HOME)/.vim/pack/minpac/opt/minpac/
-
-$(HOME)/.vim/pack/minpac/opt/minpac/:
-	mkdir -p $(HOME)/.vim/pack/minpac/opt
-	cd $(HOME)/.vim/pack/minpac/opt && \
-	git clone https://github.com/k-takata/minpac.git
-
-install-neovim:
-	pip3 install neovim
 
 $(HOME)/.tigrc:
 	ln -s $(CURDIR)/tigrc $(HOME)/.tigrc
