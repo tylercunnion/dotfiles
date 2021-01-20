@@ -38,8 +38,8 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'fatih/vim-go'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
 Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
@@ -53,13 +53,13 @@ Plug 'tpope/vim-repeat'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-surround'
 Plug 'tmux-plugins/vim-tmux'
-Plug 'christoomey/vim-tmux-navigator'
+"Plug 'christoomey/vim-tmux-navigator'
 Plug 'hashivim/vim-terraform'
 Plug 'airblade/vim-rooter'
 Plug 'Shougo/deoplete.nvim'
 Plug 'zchee/deoplete-go'
 Plug 'w0rp/ale'
-Plug 'edkolev/tmuxline.vim'
+"Plug 'edkolev/tmuxline.vim'
 Plug 'craigemery/vim-autotag'
 Plug 'sheerun/vim-polyglot'
 Plug 'chriskempson/base16-vim'
