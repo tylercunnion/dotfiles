@@ -2,6 +2,7 @@ install: install-zsh install-vim install-tig install-dircolors install-tmux inst
 
 install-zsh: $(HOME)/.zshrc $(HOME)/.zsh
 install-vim: $(HOME)/.vimrc $(HOME)/.vim install-pynvim
+install-nvim: $(HOME)/.config/nvim
 install-tig: $(HOME)/.tigrc
 install-dircolors: $(HOME)/.dir_colors
 install-tmux: $(HOME)/.tmux.conf $(HOME)/.tmux
@@ -22,6 +23,10 @@ $(HOME)/.vimrc:
 	ln -s $(CURDIR)/vimrc $(HOME)/.vimrc
 $(HOME)/.vim:
 	ln -s $(CURDIR)/vim $(HOME)/.vim
+
+$(HOME)/.config/nvim:
+	mkdir -p $(HOME)/.config
+	ln -s $(CURDIR)/nvim $(HOME)/.config/nvim
 
 $(HOME)/.tigrc:
 	ln -s $(CURDIR)/tigrc $(HOME)/.tigrc
