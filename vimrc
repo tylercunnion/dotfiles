@@ -45,7 +45,7 @@ Plug 'preservim/nerdcommenter'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'lifepillar/vim-solarized8'
+Plug 'altercation/vim-colors-solarized'
 Plug 'dag/vim-fish'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
@@ -56,19 +56,17 @@ Plug 'tmux-plugins/vim-tmux'
 "Plug 'christoomey/vim-tmux-navigator'
 Plug 'hashivim/vim-terraform'
 Plug 'airblade/vim-rooter'
-Plug 'Shougo/deoplete.nvim'
-Plug 'zchee/deoplete-go'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'beeender/Comrade'
+"Plug 'zchee/deoplete-go'
 Plug 'w0rp/ale'
 "Plug 'edkolev/tmuxline.vim'
 Plug 'craigemery/vim-autotag'
 Plug 'sheerun/vim-polyglot'
-Plug 'chriskempson/base16-vim'
+"Plug 'chriskempson/base16-vim'
 call plug#end()
 
-let g:solarized_use16 = 1
-
-set background=dark
-colorscheme solarized8
+colorscheme solarized
 
 set copyindent    " copy the previous indentation on autoindenting
 set shiftwidth=4  " number of spaces to use for autoindenting
@@ -98,7 +96,8 @@ set incsearch
 set completeopt-=preview
 set omnifunc=syntaxcomplete#Complete
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#go = 'vim-go'
+"let g:deoplete#sources#go = 'vim-go'
+
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 let g:airline#extensions#ale#enabled = 1
@@ -115,6 +114,10 @@ let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_command = "goimports"
+
+call deoplete#custom#option('omni_patterns', {
+\ 'go': '[^. *\t]\.\w*',
+\})
 
 let java_highlight_all = 1
 let java_comment_strings = 1
@@ -152,3 +155,18 @@ let g:tagbar_type_go = {
 
 set tags=tags;/ " look for ctags up to the root
 set rtp+=/usr/local/opt/fzf
+
+function! SetBackgroundMode(...)
+    let s:new_bg = "light"
+    let s:mode = systemlist("defaults read -g AppleInterfaceStyle")[0]
+    if s:mode ==? "dark"
+        let s:new_bg = "dark"
+    else
+        let s:new_bg = "light"
+    endif
+    if &background !=? s:new_bg
+        let &background = s:new_bg
+    endif
+endfunction
+call SetBackgroundMode()
+call timer_start(3000, "SetBackgroundMode", {"repeat": -1})
