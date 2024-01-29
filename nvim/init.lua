@@ -22,40 +22,26 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    {
-        'nvim-tree/nvim-web-devicons', -- Icons for nvim-tree
-        priority = 1000,
+    { 'nvim-tree/nvim-web-devicons', lazy = false, }, -- Icons for nvim-tree
+    { -- Solarized theme
+        'Tsuzat/NeoSolarized.nvim',
         lazy = false,
     },
     { -- Treesitter for syntax highlighting
         'nvim-treesitter/nvim-treesitter', -- Treesitter for syntax highlighting
         build = ":TSUpdate",
-        config = function ()
+        config = function()
             require('nvim-treesitter.configs').setup({
                 ensure_installed = {"c", "lua", "vim", "python", "java", "go"},
                 highlight = { enable = true, },
                 indent = { enable = true, },
             })
-        end,
-    },
-    { -- Solarized theme
-        'Tsuzat/NeoSolarized.nvim',
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require('NeoSolarized').setup({
-                style = "dark",
-                transparent = false,
-                enable_italics = true,
-                styles = {
-                    comments = { italic = true },
-                },
-            })
-            vim.cmd [[ colorscheme NeoSolarized ]]
         end
     },
     { -- Github Copilot
         'zbirenbaum/copilot.lua',
+        lazy = true,
+        event = "InsertEnter",
         config = function()
             require('copilot').setup({
                 suggestion = { enabled = false },
@@ -72,10 +58,7 @@ require("lazy").setup({
     },
     {
         'zbirenbaum/copilot-cmp', -- Github Copilot source for nvim-cmp
-        dependencies = { 'zbirenbaum/copilot.lua' },
-        config = function()
-            require('copilot_cmp').setup()
-        end
+        config = true,
     },
     {
         'hrsh7th/nvim-cmp',   -- Autocompletion
@@ -97,7 +80,7 @@ require("lazy").setup({
                 snippet = {
                     expand = function(args)
                         vim.fn["vsnip#anonymous"](args.body)
-                        end,
+                    end,
                 },
                 window = {
                     completion = cmp.config.window.bordered(),
@@ -161,9 +144,7 @@ require("lazy").setup({
     {
         'nvim-tree/nvim-tree.lua', -- File explorer
         dependencies = { 'nvim-tree/nvim-web-devicons' },
-        config = function()
-            require('nvim-tree').setup()
-        end
+        config = true,
     },
     { -- LSP config
         'neovim/nvim-lspconfig',
@@ -191,3 +172,14 @@ require("lazy").setup({
         end
     }
 })
+
+require('NeoSolarized').setup({
+    style = "dark",
+    transparent = false,
+    enable_italics = true,
+    styles = {
+        comments = { italic = true },
+    },
+})
+vim.cmd [[ colorscheme NeoSolarized ]]
+
