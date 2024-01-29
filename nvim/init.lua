@@ -22,17 +22,22 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    {
+        'nvim-tree/nvim-web-devicons', -- Icons for nvim-tree
+        priority = 1000,
+        lazy = false,
+    },
     { -- Treesitter for syntax highlighting
         'nvim-treesitter/nvim-treesitter', -- Treesitter for syntax highlighting
         build = ":TSUpdate",
         config = function ()
             require('nvim-treesitter.configs').setup({
-                ensure_installed = {"lua", "vim", "python", "java", "go"},
+                ensure_installed = {"c", "lua", "vim", "python", "java", "go"},
                 highlight = { enable = true, },
                 indent = { enable = true, },
             })
         end,
-    }, 
+    },
     { -- Solarized theme
         'Tsuzat/NeoSolarized.nvim',
         lazy = false,
@@ -41,10 +46,14 @@ require("lazy").setup({
             require('NeoSolarized').setup({
                 style = "dark",
                 transparent = false,
+                enable_italics = true,
+                styles = {
+                    comments = { italic = true },
+                },
             })
             vim.cmd [[ colorscheme NeoSolarized ]]
         end
-    }, 
+    },
     { -- Github Copilot
         'zbirenbaum/copilot.lua',
         config = function()
@@ -74,26 +83,40 @@ require("lazy").setup({
             'hrsh7th/cmp-buffer', -- Buffer source for nvim-cmp
             'hrsh7th/cmp-path', -- Path source for nvim-cmp
             'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
+            'hrsh7th/vim-vsnip', -- vsnip 
+            'hrsh7th/cmp-vsnip', -- vsnip source
             'zbirenbaum/copilot-cmp', -- Github Copilot source for nvim-cmp
+            'onsails/lspkind-nvim', -- LSP icons for nvim-cmp
         },
         config = function()
             local cmp = require('cmp')
-
+            local lspkind = require('lspkind')
             local select_opts = {behavior = cmp.SelectBehavior.Select}
 
             cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        vim.fn["vsnip#anonymous"](args.body)
+                        end,
+                },
                 window = {
-                    completion = {
-                        border = 'rounded',
-                        scrollbar = '║',
-                    },
+                    completion = cmp.config.window.bordered(),
                     documentation = cmp.config.window.bordered(),
                 },
-
+                formatting = {
+                    format = lspkind.cmp_format({
+                        mode = 'symbol',
+                        maxwidth = 50,
+                        symbol_map = { Copilot = "" },
+                        ellipsis_char = '...',
+                        show_labelDetails = true,
+                    })
+                },
                 sources = {
                     {name = 'copilot'},
                     {name = 'path'},
                     {name = 'nvim_lsp'},
+                    {name = 'vsnip' },
                     {name = 'buffer'},
                 },
                 mapping = {
@@ -139,18 +162,30 @@ require("lazy").setup({
         'nvim-tree/nvim-tree.lua', -- File explorer
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function()
-            require('nvim-tree').setup({
-            })
+            require('nvim-tree').setup()
         end
     },
     { -- LSP config
         'neovim/nvim-lspconfig',
-        dependencies = { 'hrsh7th/cmp-nvim-lsp' },
+        dependencies = {
+            'hrsh7th/cmp-nvim-lsp',
+            'folke/neodev.nvim',
+        },
         config = function ()
+            require('neodev').setup()
             local lspconfig = require('lspconfig')
             local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
             lspconfig.pyright.setup({
+                capabilities = lsp_capabilities
+            })
+            lspconfig.lua_ls.setup({
+                capabilities = lsp_capabilities
+            })
+            lspconfig.dockerls.setup({
+                capabilities = lsp_capabilities
+            })
+            lspconfig.gopls.setup({
                 capabilities = lsp_capabilities
             })
         end
