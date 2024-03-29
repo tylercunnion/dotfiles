@@ -22,6 +22,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    { 'williamboman/mason.nvim',
+        lazy = false,
+        config = true
+    },
+    { 'williamboman/mason-lspconfig.nvim',
+        lazy = false,
+        config = true,
+        dependencies = {
+            'williamboman/mason.nvim',
+        }
+    },
     { 'nvim-tree/nvim-web-devicons', lazy = false, }, -- Icons for nvim-tree
     { -- Solarized theme
         'Tsuzat/NeoSolarized.nvim',
@@ -33,6 +44,7 @@ require("lazy").setup({
         config = function()
             require('nvim-treesitter.configs').setup({
                 ensure_installed = {"c", "lua", "vim", "python", "java", "go"},
+                auto_install = true,
                 highlight = { enable = true, },
                 indent = { enable = true, },
             })
@@ -66,6 +78,7 @@ require("lazy").setup({
             'hrsh7th/cmp-buffer', -- Buffer source for nvim-cmp
             'hrsh7th/cmp-path', -- Path source for nvim-cmp
             'hrsh7th/cmp-nvim-lsp', -- LSP source for nvim-cmp
+            'hrsh7th/cmp-nvim-lsp-signature-help', -- LSP source for signature completion
             'hrsh7th/vim-vsnip', -- vsnip 
             'hrsh7th/cmp-vsnip', -- vsnip source
             'zbirenbaum/copilot-cmp', -- Github Copilot source for nvim-cmp
@@ -96,6 +109,7 @@ require("lazy").setup({
                     })
                 },
                 sources = {
+                    {name = 'nvim_lsp_signature_help' },
                     {name = 'copilot'},
                     {name = 'path'},
                     {name = 'nvim_lsp'},
@@ -149,29 +163,25 @@ require("lazy").setup({
     { -- LSP config
         'neovim/nvim-lspconfig',
         dependencies = {
+            'williamboman/mason-lspconfig.nvim',
             'hrsh7th/cmp-nvim-lsp',
             'folke/neodev.nvim',
         },
         config = function ()
             require('neodev').setup()
-            local lspconfig = require('lspconfig')
             local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-            lspconfig.pyright.setup({
-                capabilities = lsp_capabilities
-            })
-            lspconfig.lua_ls.setup({
-                capabilities = lsp_capabilities
-            })
-            lspconfig.dockerls.setup({
-                capabilities = lsp_capabilities
-            })
-            lspconfig.gopls.setup({
-                capabilities = lsp_capabilities
-            })
+            require("mason-lspconfig").setup_handlers {
+                function(server_name)
+                    require("lspconfig")[server_name].setup({ capabilities = lsp_capabilities })
+                end
+            }
         end
     }
 })
+
+-- require('mason').setup()
+-- require('mason-lspconfig').setup()
 
 require('NeoSolarized').setup({
     style = "dark",
