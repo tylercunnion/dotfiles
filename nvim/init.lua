@@ -176,12 +176,11 @@ require("lazy").setup({
                     require("lspconfig")[server_name].setup({ capabilities = lsp_capabilities })
                 end
             }
+            -- lspconfig.groovyls.setup({
+            --    cmd = { 'java', '-jar', '/Users/tycunn/groovy-language-server/build/libs/groovy-language-server-all.jar' },
         end
     }
 })
-
--- require('mason').setup()
--- require('mason-lspconfig').setup()
 
 require('NeoSolarized').setup({
     style = "dark",
