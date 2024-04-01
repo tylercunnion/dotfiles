@@ -1,9 +1,7 @@
 let mapleader=","
 
 set showcmd
-
 set autoread
-
 set mouse=a
 
 if !has('nvim')
@@ -11,7 +9,6 @@ if !has('nvim')
 endif
 
 map <F5> :NERDTreeToggle<CR>
-map <F6> :TagbarToggle<CR>
 
 set number
 set ls=2
@@ -30,42 +27,6 @@ endtry
 
 set encoding=utf-8 "god willing this will work ok
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-call plug#begin('~/.vim/plugged')
-Plug 'fatih/vim-go'
-"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-"Plug 'junegunn/fzf.vim'
-Plug 'majutsushi/tagbar'
-Plug 'preservim/nerdcommenter'
-Plug 'preservim/nerdtree'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'altercation/vim-colors-solarized'
-Plug 'dag/vim-fish'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-repeat'
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-surround'
-Plug 'tmux-plugins/vim-tmux'
-"Plug 'christoomey/vim-tmux-navigator'
-Plug 'hashivim/vim-terraform'
-Plug 'airblade/vim-rooter'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"Plug 'beeender/Comrade'
-"Plug 'zchee/deoplete-go'
-Plug 'w0rp/ale'
-"Plug 'edkolev/tmuxline.vim'
-Plug 'craigemery/vim-autotag'
-Plug 'sheerun/vim-polyglot'
-"Plug 'chriskempson/base16-vim'
-call plug#end()
-
 colorscheme solarized
 
 set copyindent    " copy the previous indentation on autoindenting
@@ -80,26 +41,69 @@ set smarttab      " insert tabs on the start of a line according to
 set nobackup
 set noswapfile
 
-let g:airline_powerline_fonts = 1
-let g:airline_solarized_bg='dark'
-
-let g:tmuxline_preset = {
-  \'a' : '#(/bin/bash ~/.tmux/kube-tmux/kube.tmux white,normal white white)',
-  \'win'  : ['#I', '#W'],
-  \'cwin' : ['#I', '#W', '#F'],
-  \'y'    : ['%R', '%a', '%Y'],
-  \'z'    : '#h'}
-
 set hlsearch
 set incsearch
 
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+Plug 'fatih/vim-go'
+Plug 'preservim/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'altercation/vim-colors-solarized'
+Plug 'dag/vim-fish'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-repeat'
+Plug 'vim-ruby/vim-ruby'
+Plug 'hashivim/vim-terraform'
+Plug 'airblade/vim-rooter'
+Plug 'dense-analysis/ale'
+Plug 'sheerun/vim-polyglot'
+Plug 'github/copilot.vim'
+
+Plug 'prabirshrestha/vim-lsp'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'lighttiger2505/deoplete-vim-lsp'
+call plug#end()
+
+"if executable('pyright')
+"  au User lsp_setup call lsp#register_server({
+"    \ 'name': 'pyright',
+"    \ 'cmd': {server_info->['pyright']},
+"    \ 'allowlist': ['python'],
+"    \ })
+"endif
+
+#function! s:on_lsp_buffer_enabled() abort
+#  if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+#    nmap <buffer> gd <plug>(lsp-definition)
+#    nmap <buffer> gr <plug>(lsp-references)
+#    nmap <buffer> gi <plug>(lsp-implementation)
+#    nmap <buffer> gt <plug>(lsp-type-definition)
+#    nmap <buffer> <leader>rn <plug>(lsp-rename)
+#    nmap <buffer> [g <Plug>(lsp-previous-diagnostic)
+#    nmap <buffer> ]g <Plug>(lsp-next-diagnostic)
+#    nmap <buffer> K <plug>(lsp-hover)
+#endfunction
+
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+let g:airline_powerline_fonts = 1
+let g:airline_solarized_bg='dark'
+
 set completeopt-=preview
-set omnifunc=syntaxcomplete#Complete
+"set omnifunc=syntaxcomplete#Complete
+set omnifunc=lsp#complete
 let g:deoplete#enable_at_startup = 1
-"let g:deoplete#sources#go = 'vim-go'
-
-"autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
 let g:airline#extensions#ale#enabled = 1
 
 " Ctrl-r in visual mode for replace
