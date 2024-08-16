@@ -2,4 +2,6 @@ alias timeout gtimeout
 alias dircolors gdircolors
 alias vi vim
 alias vim nvim
-alias ls "gls --color -hF"
+#alias ls "gls --color -hF"
+alias ls "eza --icons "
+
