@@ -1,6 +1,9 @@
 vim.g.loaded_netrw       = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.g.mapleader = ","
+vim.g.python3_host_prog = "/Users/tycunn/dotfiles/pynvim-venv/bin/python3"
+
 vim.cmd("set number")
 vim.cmd("set ls=2")
 vim.cmd("set tabstop=4 softtabstop=4 shiftwidth=4 expandtab")
@@ -160,6 +163,43 @@ require("lazy").setup({
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = true,
     },
+    {
+      "folke/trouble.nvim",
+      branch = "dev", -- IMPORTANT!
+      keys = {
+        {
+          "<leader>xx",
+          "<cmd>Trouble diagnostics toggle<cr>",
+          desc = "Diagnostics (Trouble)",
+        },
+        {
+          "<leader>xX",
+          "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+          desc = "Buffer Diagnostics (Trouble)",
+        },
+        {
+          "<leader>cs",
+          "<cmd>Trouble symbols toggle focus=false<cr>",
+          desc = "Symbols (Trouble)",
+        },
+        {
+          "<leader>cl",
+          "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+          desc = "LSP Definitions / references / ... (Trouble)",
+        },
+        {
+          "<leader>xL",
+          "<cmd>Trouble loclist toggle<cr>",
+          desc = "Location List (Trouble)",
+        },
+        {
+          "<leader>xQ",
+          "<cmd>Trouble qflist toggle<cr>",
+          desc = "Quickfix List (Trouble)",
+        },
+      },
+      opts = {}, -- for default options, refer to the configuration section for custom setup.
+    },
     { -- LSP config
         'neovim/nvim-lspconfig',
         dependencies = {
@@ -174,12 +214,66 @@ require("lazy").setup({
             require("mason-lspconfig").setup_handlers {
                 function(server_name)
                     require("lspconfig")[server_name].setup({ capabilities = lsp_capabilities })
+                end,
+                ["gopls"] = function () 
+                    local lspconfig = require("lspconfig")
+                    lspconfig.gopls.setup({
+                        capabilities = lsp_capabilities,
+                        settings = {
+                            gopls = {
+                                completeUnimported = true,
+                                usePlaceholders = true,
+                                analyses = {
+                                    unusedparams = true,
+
+                                },
+                                staticcheck = true,
+                                --gofumpt = true,
+                            },
+                        },
+                    })
                 end
             }
-            -- lspconfig.groovyls.setup({
-            --    cmd = { 'java', '-jar', '/Users/tycunn/groovy-language-server/build/libs/groovy-language-server-all.jar' },
         end
-    }
+    },
+    {
+        'stevearc/conform.nvim',
+        opts = {},
+        config = function()
+            require('conform').setup({
+                formatters_by_ft = {
+                    go = { "goimports", "gofumpt" }
+                },
+                format_after_save = {
+                    lsp_fallback = true,
+                }
+            })
+        end
+    },
+    {
+        'olexsmir/gopher.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-treesitter/nvim-treesitter',
+        },
+        ft = "go",
+        config = function(_, opts)
+            require('gopher').setup(opts)
+        end,
+        build = function()
+            vim.cmd [[silent! GoInstallDeps]]
+        end,
+    },
+    {
+        "FabijanZulj/blame.nvim",
+        config = function()
+            require("blame").setup()
+        end
+    },
+    {
+        'nvim-telescope/telescope.nvim', tag = '0.1.6',
+        dependencies = { 'nvim-lua/plenary.nvim' }
+    },
 })
 
 require('NeoSolarized').setup({
