@@ -163,43 +163,6 @@ require("lazy").setup({
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = true,
     },
-    {
-      "folke/trouble.nvim",
-      branch = "dev", -- IMPORTANT!
-      keys = {
-        {
-          "<leader>xx",
-          "<cmd>Trouble diagnostics toggle<cr>",
-          desc = "Diagnostics (Trouble)",
-        },
-        {
-          "<leader>xX",
-          "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-          desc = "Buffer Diagnostics (Trouble)",
-        },
-        {
-          "<leader>cs",
-          "<cmd>Trouble symbols toggle focus=false<cr>",
-          desc = "Symbols (Trouble)",
-        },
-        {
-          "<leader>cl",
-          "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-          desc = "LSP Definitions / references / ... (Trouble)",
-        },
-        {
-          "<leader>xL",
-          "<cmd>Trouble loclist toggle<cr>",
-          desc = "Location List (Trouble)",
-        },
-        {
-          "<leader>xQ",
-          "<cmd>Trouble qflist toggle<cr>",
-          desc = "Quickfix List (Trouble)",
-        },
-      },
-      opts = {}, -- for default options, refer to the configuration section for custom setup.
-    },
     { -- LSP config
         'neovim/nvim-lspconfig',
         dependencies = {
@@ -208,32 +171,67 @@ require("lazy").setup({
             'folke/neodev.nvim',
         },
         config = function ()
+            local on_attach = function(client, bufnr)
+                local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+                local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+                local opts = { noremap = true, silent = true }
+
+                buf_set_keymap('n', 'gD', '<cmd>Telescope lsp_type_definitions<CR>', opts)
+                buf_set_keymap('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', opts)
+                buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+                buf_set_keymap('n', 'gh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+                buf_set_keymap('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
+                buf_set_keymap('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
+                buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+                buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+                buf_set_keymap('n', '<leader>ll', '<cmd>lua vim.lsp.codelens.run()<cr>', opts)
+                buf_set_keymap('n', '<leader>lR', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+                client.server_capabilities.document_formatting = true
+            end
+
             require('neodev').setup()
             local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
             require("mason-lspconfig").setup_handlers {
                 function(server_name)
-                    require("lspconfig")[server_name].setup({ capabilities = lsp_capabilities })
+                    require("lspconfig")[server_name].setup({ on_attach = on_attach, capabilities = lsp_capabilities })
                 end,
                 ["gopls"] = function () 
                     local lspconfig = require("lspconfig")
                     lspconfig.gopls.setup({
+                        on_attach = on_attach,
                         capabilities = lsp_capabilities,
                         settings = {
                             gopls = {
                                 completeUnimported = true,
                                 usePlaceholders = true,
-                                analyses = {
-                                    unusedparams = true,
-
-                                },
-                                staticcheck = true,
-                                --gofumpt = true,
                             },
                         },
                     })
                 end
             }
+        end
+    },
+    {
+        "mfussenegger/nvim-lint",
+        event = {
+            "BufReadPre",
+            "BufNewFile",
+        },
+        config = function()
+            local lint = require("lint")
+
+            lint.linters_by_ft = {
+              go = { "golangcilint" },
+            }
+
+            vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+                group = lint_augroup,
+                callback = function()
+                  lint.try_lint()
+                end,
+            })
         end
     },
     {
@@ -273,6 +271,43 @@ require("lazy").setup({
     {
         'nvim-telescope/telescope.nvim', tag = '0.1.6',
         dependencies = { 'nvim-lua/plenary.nvim' }
+    },
+    {
+        "folke/trouble.nvim",
+        opts = {}, -- for default options, refer to the configuration section for custom setup.
+        cmd = "Trouble",
+        keys = {
+            {
+              "<leader>xx",
+              "<cmd>Trouble diagnostics toggle<cr>",
+              desc = "Diagnostics (Trouble)",
+            },
+            {
+              "<leader>xX",
+              "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+              desc = "Buffer Diagnostics (Trouble)",
+            },
+            {
+              "<leader>cs",
+              "<cmd>Trouble symbols toggle focus=false<cr>",
+              desc = "Symbols (Trouble)",
+            },
+            {
+              "<leader>cl",
+              "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+              desc = "LSP Definitions / references / ... (Trouble)",
+            },
+            {
+              "<leader>xL",
+              "<cmd>Trouble loclist toggle<cr>",
+              desc = "Location List (Trouble)",
+            },
+            {
+              "<leader>xQ",
+              "<cmd>Trouble qflist toggle<cr>",
+              desc = "Quickfix List (Trouble)",
+            },
+        },
     },
 })
 
