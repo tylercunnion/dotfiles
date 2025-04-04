@@ -9,7 +9,7 @@ install-tmux: $(HOME)/.tmux.conf $(HOME)/.tmux
 install-fish: $(HOME)/.config/fish install-fisher
 
 install-pynvim:
-	pip3 install --upgrade pynvim
+	./install-pynvim.sh
 
 brew-bundle:
 	brew bundle
@@ -60,4 +60,5 @@ clean:
 	rm $(HOME)/.vim
 	rm $(HOME)/.tigrc
 	rm $(HOME)/.dir_colors
-	rm ($HOME)/.config/fish
+	rm $(HOME)/.config/fish
+	rm $(HOME)/pynvim-venv

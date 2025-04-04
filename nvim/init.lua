@@ -2,7 +2,7 @@ vim.g.loaded_netrw       = 1
 vim.g.loaded_netrwPlugin = 1
 
 vim.g.mapleader = ","
-vim.g.python3_host_prog = "/Users/tycunn/dotfiles/pynvim-venv/bin/python3"
+vim.g.python3_host_prog = os.getenv('HOME') .. "/dotfiles/pynvim-venv/bin/python3"
 
 vim.cmd("set number")
 vim.cmd("set ls=2")
