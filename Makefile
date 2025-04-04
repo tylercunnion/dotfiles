@@ -14,9 +14,6 @@ install-pynvim:
 brew-bundle:
 	brew bundle
 
-brew-jenv:
-	brew install jenv
-
 install-rust:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
