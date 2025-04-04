@@ -3,6 +3,8 @@ vim/pack
 vim/autoload
 vim/plugged
 fish/functions/fisher.fish
+fish/functions/decrypt_secret.fish
 tmux/plugins
 Brewfile.lock.json
 *.bak
+pynvim-venv/

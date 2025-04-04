@@ -4,4 +4,5 @@ alias vi vim
 alias vim nvim
 #alias ls "gls --color -hF"
 alias ls "eza --icons "
+alias gs "gcloud storage"
 
