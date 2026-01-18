@@ -66,3 +66,8 @@ function locate
 setopt CORRECT
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/tyler/.lmstudio/bin"
+# End of LM Studio CLI section
+

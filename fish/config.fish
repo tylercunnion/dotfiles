@@ -23,3 +23,8 @@ end
 if test -e ~/.config/fish/fish_aliases
     source ~/.config/fish/fish_aliases
 end
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/tyler/.lmstudio/bin
+# End of LM Studio CLI section
+
