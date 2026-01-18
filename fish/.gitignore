@@ -1,8 +1,13 @@
+# --- Ignore Fisher artifacts ---
+functions/*
+conf.d/*
+completions/*
+
+# --- Exceptions ---
+!config.fish
+!fish_plugins
+
+# --- System-specific files ---
+fish_variables
 fishd.*
 system.fish
-functions/__bass.py
-functions/bass.fish
-functions/fzf_key_bindings.fish
-completions/fisher.fish
-completions/kubectl.fish
-fish_variables
