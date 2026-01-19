@@ -20,7 +20,11 @@ return { -- LSP config
             buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
             buf_set_keymap('n', '<leader>ll', '<cmd>lua vim.lsp.codelens.run()<cr>', opts)
             buf_set_keymap('n', '<leader>lR', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-            client.server_capabilities.document_formatting = true
+
+            -- Setup formatting capability
+            if client.server_capabilities.documentFormattingProvider then
+                buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+            end
         end
 
         local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
