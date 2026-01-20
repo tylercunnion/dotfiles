@@ -8,6 +8,7 @@ end
 if status --is-interactive
     fish_hybrid_key_bindings
     set -x GPG_TTY (tty 2>/dev/null || echo "/dev/tty")
+    fish_config theme choose solarized
 end
 
 set -x EDITOR nvim
