@@ -5,43 +5,51 @@ return { -- LSP config
         'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
-        local on_attach = function(client, bufnr)
-            local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-
-            local opts = { noremap = true, silent = true }
-
-            buf_set_keymap('n', 'gD', '<cmd>Telescope lsp_type_definitions<CR>', opts)
-            buf_set_keymap('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', opts)
-            buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-            buf_set_keymap('n', 'gh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-            buf_set_keymap('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
-            buf_set_keymap('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
-            buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-            buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-            buf_set_keymap('n', '<leader>ll', '<cmd>lua vim.lsp.codelens.run()<cr>', opts)
-            buf_set_keymap('n', '<leader>lR', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-
-            -- Setup formatting capability
-            if client.server_capabilities.documentFormattingProvider then
-                buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
-            end
-        end
-
-        local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-
         vim.lsp.config('*', {
-            on_attach = on_attach,
-            capabilities = lsp_capabilities,
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+            on_attach = function(client, bufnr)
+                local opts = { buffer = bufnr, silent = true }
+
+                vim.keymap.set('n', 'gD', '<cmd>Telescope lsp_type_definitions<CR>', opts)
+                vim.keymap.set('n', 'gd', '<cmd>Telescope lsp_definitions<CR>', opts)
+                vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+                vim.keymap.set('n', 'gh', vim.lsp.buf.signature_help, opts)
+                vim.keymap.set('n', 'gi', '<cmd>Telescope lsp_implementations<CR>', opts)
+                vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<CR>', opts)
+                vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+                vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+                vim.keymap.set('n', '<leader>ll', vim.lsp.codelens.run, opts)
+                vim.keymap.set('n', '<leader>lR', vim.lsp.buf.rename, opts)
+
+                if client and client.supports_method('textDocument/inlayHint') then
+                    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                end
+            end,
         })
+
         vim.lsp.config('gopls', {
-            on_attach = on_attach,
-            capabilities = lsp_capabilities,
+            cmd = { 'gopls' },
+            root_markers = { 'go.work', 'go.mod', '.git' },
             settings = {
                 gopls = {
+                    gofumpt = true,
+                    analyses = { unusedparams = true, shadow = true },
+                    staticcheck = true,
                     completeUnimported = true,
                     usePlaceholders = true,
+                    hints = {
+                        assignVariableTypes = true,
+                        compositeLiteralFields = true,
+                    },
                 },
             },
         })
+        vim.lsp.config('golangci_lint_ls', {
+            cmd = { 'golangci-lint-langserver' },
+            root_markers = { '.golangci.yml', '.golangci.yaml', 'go.mod' },
+        })
+
+        vim.lsp.enable('gopls')
+        vim.lsp.enable('golangci_lint_ls')
     end
 }
