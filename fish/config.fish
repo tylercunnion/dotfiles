@@ -1,3 +1,7 @@
+if test -e ~/.config/fish/system.fish
+    source ~/.config/fish/system.fish
+end
+
 # Install Fisher if not already installed
 if not functions -q fisher
     set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
@@ -18,15 +22,7 @@ set -x LESS -R
 
 eval (gdircolors -c ~/.dir_colors)
 
-if test -e ~/.config/fish/system.fish
-    source ~/.config/fish/system.fish
-end
-
 if test -e ~/.config/fish/fish_aliases
     source ~/.config/fish/fish_aliases
 end
-
-# Added by LM Studio CLI (lms)
-set -gx PATH $PATH /Users/tyler/.lmstudio/bin
-# End of LM Studio CLI section
 

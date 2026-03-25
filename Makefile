@@ -38,7 +38,7 @@ $(HOME)/.tigrc:
 	ln -s $(CURDIR)/tigrc $(HOME)/.tigrc
 
 $(HOME)/.dir_colors:
-	ln -s $(CURDIR)/dircolors-solarized/dircolors.ansi-dark $(HOME)/.dir_colors
+	ln -s $(CURDIR)/dircolors-solarized/dircolors.ansi-universal $(HOME)/.dir_colors
 
 $(HOME)/.tmux:
 	ln -s $(CURDIR)/tmux $(HOME)/.tmux
