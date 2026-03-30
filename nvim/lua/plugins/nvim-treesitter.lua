@@ -1,12 +1,14 @@
 return { -- Treesitter for syntax highlighting
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
     build = ":TSUpdate",
     config = function()
-        require('nvim-treesitter.configs').setup({
-            ensure_installed = { "c", "lua", "vim", "python", "java", "go" },
-            auto_install = true,
-            highlight = { enable = true, },
-            indent = { enable = true, },
+        local ts = require("nvim-treesitter")
+        ts.install { "c", "lua", "vim", "python", "java", "go", "javascript", "typescript" }
+
+        vim.api.nvim_create_autocmd('FileType', {
+            pattern = { 'c', 'lua', 'vim', 'python', 'java', 'go', 'javascript', 'typescript' },
+            callback = function() vim.treesitter.start() end,
         })
     end
 }

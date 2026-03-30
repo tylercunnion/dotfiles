@@ -6,9 +6,9 @@ require("config.lazy")
 
 -- Lazy loading
 require("lazy").setup("plugins", {
-	change_detection = {
-		notify = false, -- Disable notifications for changes
-	},
+    change_detection = {
+        notify = false, -- Disable notifications for changes
+    },
 })
 
-vim.cmd([[ colorscheme selenized ]])
+require("config.theme")

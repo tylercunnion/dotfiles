@@ -2,11 +2,11 @@ return { -- LSP config
     'neovim/nvim-lspconfig',
     dependencies = {
         'mason-org/mason-lspconfig.nvim',
-        'hrsh7th/cmp-nvim-lsp',
+        'saghen/blink.cmp',
     },
     config = function()
         vim.lsp.config('*', {
-            capabilities = require('cmp_nvim_lsp').default_capabilities(),
+            capabilities = require('blink.cmp').get_lsp_capabilities(),
             on_attach = function(client, bufnr)
                 local opts = { buffer = bufnr, silent = true }
 
