@@ -1,8 +1,11 @@
-alias timeout gtimeout
-alias dircolors gdircolors
-alias vi vim
+if command -q gtimeout
+    alias timeout gtimeout
+end
+if command -q gdircolors
+    alias dircolors gdircolors
+end
+alias vi nvim
 alias vim nvim
-#alias ls "gls --color -hF"
 alias ls "eza --icons "
 alias gs "gcloud storage"
 

@@ -20,9 +20,9 @@ set -x VISUAL nvim
 set -x PAGER less
 set -x LESS -R
 
-eval (gdircolors -c ~/.dir_colors)
-
 if test -e ~/.config/fish/fish_aliases
     source ~/.config/fish/fish_aliases
 end
+
+eval (dircolors -c ~/.dir_colors)
 
