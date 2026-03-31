@@ -1,12 +1,3 @@
-[submodule "vim/bundle/vim-jsbeautify"]
-	path = vim/bundle/vim-jsbeautify
-	url = git://github.com/maksimr/vim-jsbeautify.git
-[submodule "tmux/kube-tmux"]
-	path = tmux/kube-tmux
-	url = https://github.com/jonmosco/kube-tmux.git
-[submodule "tmux/plugins/tpm"]
-	path = tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm
 [submodule "dircolors-solarized"]
 	path = dircolors-solarized
 	url = https://github.com/seebi/dircolors-solarized.git

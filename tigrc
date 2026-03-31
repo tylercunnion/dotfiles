@@ -1,1 +1,1 @@
-color main-head blue default
+bind generic B @gh browse %(commit)

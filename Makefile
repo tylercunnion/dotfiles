@@ -1,10 +1,10 @@
-install: install-tig install-dircolors install-tmux install-fish #brew-bundle
+install: install-tig install-dircolors install-tmux install-fish install-nvim #brew-bundle
 
-install-nvim: $(HOME)/.config/nvim
+install-nvim: $(HOME)/.config/nvim install-pynvim
 install-tig: $(HOME)/.tigrc
 install-dircolors: $(HOME)/.dir_colors
-install-tmux: $(HOME)/.tmux.conf $(HOME)/.tmux
-install-fish: $(HOME)/.config/fish install-fisher
+install-tmux: $(HOME)/.tmux.conf
+install-fish: $(HOME)/.config/fish
 
 install-pynvim:
 	./install-pynvim.sh
@@ -14,9 +14,6 @@ brew-bundle:
 
 install-rust:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
-install-fisher:
-	curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 
 $(HOME)/.config/nvim:
 	mkdir -p $(HOME)/.config
@@ -28,9 +25,6 @@ $(HOME)/.tigrc:
 $(HOME)/.dir_colors:
 	ln -s $(CURDIR)/dircolors-solarized/dircolors.ansi-universal $(HOME)/.dir_colors
 
-$(HOME)/.tmux:
-	ln -s $(CURDIR)/tmux $(HOME)/.tmux
-
 $(HOME)/.tmux.conf:
 	ln -s $(CURDIR)/tmux.conf $(HOME)/.tmux.conf
 
@@ -41,5 +35,7 @@ $(HOME)/.config/fish:
 clean:
 	rm $(HOME)/.tigrc
 	rm $(HOME)/.dir_colors
+	rm $(HOME)/.tmux.conf
 	rm $(HOME)/.config/fish
-	rm $(HOME)/pynvim-venv
+	rm $(HOME)/.config/nvim
+	rm -rf $(CURDIR)/pynvim-venv
