@@ -60,6 +60,9 @@ Cloud-based completions via `zbirenbaum/copilot.lua`. Suggestions and the panel 
 ### Minuet AI (`minuet-ai.nvim`)
 Local model completions via LMStudio running at `http://localhost:1234`. Currently configured for `mistralai/devstral-small-2-2512` with a 16k context window, 256 max tokens, and 0.15 temperature. Minuet completions appear in the same blink menu as LSP suggestions, distinguished by a `󰚩` icon and given a score boost (`score_offset = 50`) to surface them higher.
 
+### claude-preview.nvim (`claudepreview.lua`)
+Renders Claude AI responses (markdown, code blocks) in a Neovim preview buffer. Plugin: `Cannon07/claude-preview.nvim`.
+
 ### blink.cmp
 The completion engine that unifies all sources. Sources in priority order: LSP, path, snippets, buffer, minuet. Key bindings:
 
@@ -75,7 +78,7 @@ The completion engine that unifies all sources. Sources in priority order: LSP, 
 
 ## LSP
 
-Configured via `nvim-lspconfig` with capabilities fed from blink.cmp so the completion engine and language servers stay in sync.
+Uses Neovim's native `vim.lsp.config()` / `vim.lsp.enable()` API (0.11+), with `nvim-lspconfig` as a dependency for server definitions. Capabilities are fed from blink.cmp so the completion engine and language servers stay in sync.
 
 ### Active Language Servers
 
@@ -150,17 +153,16 @@ neotest-go is configured with:
 
 ### Key Workflows
 
-**Run the test under your cursor:** `<leader>tt` — neotest detects the nearest test function and runs it.
-
-**Run all tests in the file:** `<leader>tf`
-
-**Debug a test:** `<leader>td` — runs the nearest test via the DAP strategy, handing off to nvim-dap-go and opening the debug UI automatically.
-
-**Summary panel:** `<leader>ts` — opens a tree view of all tests in the project showing pass/fail status. Navigate and re-run from here.
-
-**Output:** `<leader>to` opens the output for the nearest test. `<leader>tO` toggles a persistent output panel at the bottom.
-
-See `which-key` (`,` then wait) for the full `<leader>t` map.
+| Key | Action |
+|-----|--------|
+| `<leader>tt` | Run nearest test |
+| `<leader>tf` | Run all tests in file |
+| `<leader>tl` | Re-run last test |
+| `<leader>td` | Debug nearest test (via DAP) |
+| `<leader>ts` | Toggle test summary panel |
+| `<leader>to` | Open test output |
+| `<leader>tO` | Toggle persistent output panel |
+| `<leader>tx` | Stop test run |
 
 ---
 
@@ -231,7 +233,14 @@ In the file history view you can navigate commits and see the exact diff for eac
 ## Navigation
 
 ### Telescope
-Fuzzy finder used by LSP keybindings for definitions, implementations, and references. Also available directly for file finding and grep. Pinned to branch `0.1.x`.
+Fuzzy finder used by LSP keybindings for definitions, implementations, and references.
+
+| Key | Action |
+|-----|--------|
+| `<leader>ff` | Find files |
+| `<leader>fg` | Live grep |
+| `<leader>fb` | Buffers |
+| `<leader>fh` | Help tags |
 
 ### nvim-tree
 File explorer. Toggle with `<F5>`. Replaces netrw. Shows file icons via nvim-web-devicons (requires a Nerd Font in your terminal).
@@ -264,6 +273,7 @@ Press `,` (leader) and pause — a popup appears showing all available keybindin
 
 | Prefix | Group |
 |--------|-------|
+| `,f` | find (telescope) |
 | `,g` | git |
 | `,d` | debug |
 | `,t` | test |

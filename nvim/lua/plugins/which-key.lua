@@ -7,6 +7,7 @@ return {
             mappings = true,
         },
         spec = {
+            { "<leader>f", group = "find" },
             { "<leader>g", group = "git" },
             { "<leader>d", group = "debug" },
             { "<leader>t", group = "test" },
