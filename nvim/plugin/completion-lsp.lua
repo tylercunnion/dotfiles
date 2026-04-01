@@ -1,0 +1,141 @@
+-- LSP / completion
+require("mason").setup({
+	pip = {
+		upgrade_pip = true,
+		install_args = { "--no-cache-dir" },
+	},
+})
+
+require("mason-lspconfig").setup()
+
+require("copilot").setup({
+	suggestion = { enabled = false },
+	panel = { enabled = false },
+	server_opts_overrides = {
+		settings = {
+			advanced = { listCount = 10 },
+		},
+	},
+})
+
+require("blink.cmp").setup({
+	keymap = {
+		preset = "none",
+		["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
+		["<C-e>"] = { "hide", "fallback" },
+		["<C-y>"] = { "select_and_accept" },
+		["<CR>"] = { "accept", "fallback" },
+		["<Up>"] = { "select_prev", "fallback" },
+		["<Down>"] = { "select_next", "fallback" },
+		["<C-p>"] = { "select_prev", "fallback" },
+		["<C-n>"] = { "select_next", "fallback" },
+		["<C-u>"] = { "scroll_documentation_up", "fallback" },
+		["<C-d>"] = { "scroll_documentation_down", "fallback" },
+	},
+	appearance = { nerd_font_variant = "mono" },
+	completion = {
+		menu = {
+			border = "rounded",
+			draw = {
+				components = {
+					kind_icon = {
+						text = function(ctx)
+							if ctx.source_name == "minuet" then
+								return "󰚩"
+							end
+							return ctx.kind_icon .. ctx.icon_gap
+						end,
+					},
+				},
+			},
+		},
+		documentation = {
+			auto_show = true,
+			window = { border = "rounded" },
+		},
+	},
+	sources = {
+		default = { "lsp", "path", "snippets", "buffer", "minuet" },
+		providers = {
+			minuet = {
+				name = "minuet",
+				module = "minuet.blink",
+				async = true,
+				score_offset = 50,
+				timeout_ms = 15000,
+			},
+		},
+	},
+})
+
+require("minuet").setup({
+	provider = "openai_compatible",
+	n_completions = 1,
+	context_window = 16384,
+	request_timeout = 15,
+	provider_options = {
+		openai_compatible = {
+			end_point = "http://localhost:1234/v1/chat/completions",
+			stream = true,
+			name = "LMStudio",
+			api_key = "TERM",
+			model = "mistralai/devstral-small-2-2512",
+			optional = {
+				temperature = 0.15,
+				max_tokens = 256,
+			},
+		},
+	},
+})
+
+require("lazydev").setup({
+	library = {
+		{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+	},
+})
+
+vim.lsp.config("*", {
+	capabilities = require("blink.cmp").get_lsp_capabilities(),
+	on_attach = function(client, bufnr)
+		local opts = { buffer = bufnr, silent = true }
+		vim.keymap.set("n", "gD", "<cmd>Telescope lsp_type_definitions<CR>", opts)
+		vim.keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+		vim.keymap.set("n", "gh", vim.lsp.buf.signature_help, opts)
+		vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
+		vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
+		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+		vim.keymap.set("n", "<leader>ll", vim.lsp.codelens.run, opts)
+		vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, opts)
+		if client and client.supports_method("textDocument/inlayHint") then
+			vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+		end
+	end,
+})
+
+vim.lsp.config("gopls", {
+	cmd = { "gopls" },
+	root_markers = { "go.work", "go.mod", ".git" },
+	settings = {
+		gopls = {
+			gofumpt = true,
+			analyses = { unusedparams = true, shadow = true },
+			staticcheck = true,
+			completeUnimported = true,
+			usePlaceholders = true,
+			hints = {
+				assignVariableTypes = true,
+				compositeLiteralFields = true,
+			},
+		},
+	},
+})
+
+vim.lsp.config("golangci_lint_ls", {
+	cmd = { "golangci-lint-langserver" },
+	root_markers = { ".golangci.yml", ".golangci.yaml", "go.mod" },
+})
+
+vim.lsp.enable("gopls")
+vim.lsp.enable("golangci_lint_ls")
