@@ -13,8 +13,16 @@ vim.api.nvim_create_autocmd("PackChanged", {
 			end
 			vim.cmd("silent! GoInstallDeps")
 		end
+		if name == "telescope-fzf-native.nvim" and (kind == "install" or kind == "update") then
+			local dir = ev.data.spec.dir
+			vim.system({ "make" }, { cwd = dir })
+		end
 	end,
 })
+
+vim.api.nvim_create_user_command("PackUpdate", function()
+	vim.pack.update()
+end, {})
 
 vim.pack.add({
 	-- Shared dependencies
@@ -28,6 +36,7 @@ vim.pack.add({
 	"https://github.com/folke/which-key.nvim",
 	"https://github.com/nvim-tree/nvim-tree.lua",
 	"https://github.com/folke/trouble.nvim",
+	"https://github.com/akinsho/bufferline.nvim",
 
 	-- Treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
@@ -53,6 +62,7 @@ vim.pack.add({
 
 	-- Navigation
 	"https://github.com/nvim-telescope/telescope.nvim",
+	"https://github.com/nvim-telescope/telescope-fzf-native.nvim",
 
 	-- Testing
 	"https://github.com/nvim-neotest/neotest",
@@ -70,5 +80,6 @@ vim.pack.add({
 	"https://github.com/nvim-mini/mini.nvim",
 
 	-- Misc
+	"https://github.com/folke/todo-comments.nvim",
 	"https://github.com/Cannon07/claude-preview.nvim",
 })

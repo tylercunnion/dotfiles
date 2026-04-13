@@ -8,6 +8,12 @@ require("mason").setup({
 
 require("mason-lspconfig").setup()
 
+-- Async check: can we reach copilot? If not, fall back to minuet (local LLM).
+local _copilot_available = nil
+vim.uv.getaddrinfo("copilot-proxy.githubusercontent.com", nil, nil, function(err, res)
+	_copilot_available = err == nil and res ~= nil and #res > 0
+end)
+
 require("copilot").setup({
 	suggestion = { enabled = false },
 	panel = { enabled = false },
@@ -55,8 +61,23 @@ require("blink.cmp").setup({
 		},
 	},
 	sources = {
-		default = { "lsp", "path", "snippets", "buffer", "minuet" },
+		default = function()
+			local srcs = { "lsp", "path", "snippets", "buffer" }
+			-- copilot_available is nil (unknown) or true → use copilot; false → use minuet
+			if _copilot_available == false then
+				table.insert(srcs, "minuet")
+			else
+				table.insert(srcs, "copilot")
+			end
+			return srcs
+		end,
 		providers = {
+			copilot = {
+				name = "copilot",
+				module = "blink-copilot",
+				async = true,
+				score_offset = 100,
+			},
 			minuet = {
 				name = "minuet",
 				module = "minuet.blink",
@@ -104,8 +125,10 @@ vim.lsp.config("*", {
 		vim.keymap.set("n", "gh", vim.lsp.buf.signature_help, opts)
 		vim.keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts)
 		vim.keymap.set("n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
+		vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
 		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 		vim.keymap.set("n", "<leader>ll", vim.lsp.codelens.run, opts)
 		vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, opts)
 		if client and client.supports_method("textDocument/inlayHint") then

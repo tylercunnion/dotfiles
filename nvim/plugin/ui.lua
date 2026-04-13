@@ -38,3 +38,5 @@ require("which-key").setup({
 		{ "]", group = "next" },
 	},
 })
+
+require("bufferline").setup({})
