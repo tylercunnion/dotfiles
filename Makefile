@@ -6,6 +6,9 @@ install-dircolors: $(HOME)/.dir_colors
 install-tmux: $(HOME)/.tmux.conf
 install-fish: $(HOME)/.config/fish
 
+setup-remote:
+	./setup-remote.sh
+
 install-pynvim:
 	./install-pynvim.sh
 
