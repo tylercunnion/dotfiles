@@ -1,3 +1,5 @@
+if not require("config.profile").full then return end
+
 -- Treesitter
 require("nvim-treesitter").install({ "c", "lua", "vim", "python", "java", "go", "javascript", "typescript" })
 vim.api.nvim_create_autocmd("FileType", {

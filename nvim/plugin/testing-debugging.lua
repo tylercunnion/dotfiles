@@ -1,3 +1,5 @@
+if not require("config.profile").full then return end
+
 -- Testing
 require("neotest").setup({
 	adapters = {

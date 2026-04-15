@@ -1,3 +1,5 @@
+if not require("config.profile").full then return end
+
 -- LSP / completion
 require("mason").setup({
 	pip = {
