@@ -29,6 +29,10 @@ vim.pack.add({
 	-- Editing
 	"https://github.com/nvim-mini/mini.nvim",
 
+	-- Completion (basic sources always available)
+	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },
+	"https://github.com/mikavilpas/blink-ripgrep.nvim",
+
 	-- Misc
 	"https://github.com/folke/todo-comments.nvim",
 })
@@ -67,7 +71,6 @@ if profile.full then
 		"https://github.com/neovim/nvim-lspconfig",
 		"https://github.com/zbirenbaum/copilot.lua",
 		"https://github.com/fang2hou/blink-copilot",
-		{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },
 		"https://github.com/milanglacier/minuet-ai.nvim",
 		"https://github.com/folke/lazydev.nvim",
 
