@@ -7,5 +7,4 @@ end
 alias vi nvim
 alias vim nvim
 alias ls "eza --icons "
-alias gs "gcloud storage"
 

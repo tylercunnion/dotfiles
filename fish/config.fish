@@ -2,9 +2,8 @@ if test -e ~/.config/fish/system.fish
     source ~/.config/fish/system.fish
 end
 
-# Install Fisher if not already installed
 if not functions -q fisher
-    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update
+    echo "warning: fisher is not installed"
 end
 
 if status --is-interactive
