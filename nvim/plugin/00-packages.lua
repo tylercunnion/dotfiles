@@ -33,6 +33,10 @@ vim.pack.add({
 	{ src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1.x") },
 	"https://github.com/mikavilpas/blink-ripgrep.nvim",
 
+	-- Markdown
+	"https://github.com/OXY2DEV/markview.nvim",
+	"https://github.com/selimacerbas/markdown-preview.nvim.git",
+
 	-- Misc
 	"https://github.com/folke/todo-comments.nvim",
 })
@@ -92,7 +96,10 @@ if profile.full then
 		-- Go tools
 		"https://github.com/olexsmir/gopher.nvim",
 
+		-- Rust
+		"https://github.com/mrcjkb/rustaceanvim",
+
 		-- Misc
-		"https://github.com/Cannon07/claude-preview.nvim",
+		"https://github.com/Cannon07/code-preview.nvim",
 	})
 end

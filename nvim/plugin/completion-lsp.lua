@@ -15,7 +15,18 @@ if profile.full then
 			install_args = { "--no-cache-dir" },
 		},
 	})
-	require("mason-lspconfig").setup()
+	require("mason-lspconfig").setup({
+		handlers = {
+			function(server_name)
+				vim.lsp.enable(server_name)
+			end,
+			-- rustaceanvim manages rust-analyzer via vim.lsp.start(); skip here
+			rust_analyzer = function() end,
+		},
+	})
+	-- Belt-and-suspenders: explicitly prevent the FileType autocmd from starting
+	-- rust_analyzer. rustaceanvim uses vim.lsp.start() directly, so this is safe.
+	vim.lsp.enable("rust_analyzer", false)
 
 	-- Async check: can we reach copilot?
 	vim.uv.getaddrinfo("copilot-proxy.githubusercontent.com", nil, nil, function(err, res)
@@ -42,6 +53,11 @@ end
 
 -- Build providers table: ripgrep always, copilot/minuet in full only
 local providers = {
+	lsp = {
+		name = "LSP",
+		module = "blink.cmp.sources.lsp",
+		score_offset = 200,
+	},
 	ripgrep = {
 		module = "blink-ripgrep",
 		name = "Ripgrep",
@@ -165,7 +181,8 @@ if profile.full then
 			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
 			vim.keymap.set("n", "<leader>ll", vim.lsp.codelens.run, opts)
 			vim.keymap.set("n", "<leader>lR", vim.lsp.buf.rename, opts)
-			if client and client.supports_method("textDocument/inlayHint") then
+			-- rustaceanvim manages inlay hints for rust_analyzer; skip here to avoid duplicates
+			if client and client.supports_method("textDocument/inlayHint") and client.name ~= "rust_analyzer" then
 				vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 			end
 		end,
